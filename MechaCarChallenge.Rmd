@@ -1,0 +1,42 @@
+
+```{r}
+library(tidyverse)
+```
+```{r}
+mpg_df <- read_csv("Data/MechaCar_mpg.csv")
+head(mpg_df)
+```
+```{r}
+mpg_lm <- lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data = mpg_df)
+
+summary(mpg_lm)
+```
+```{r}
+suspension_df <- read_csv("Data/Suspension_Coil.csv")
+head(suspension_df)
+```
+```{r}
+total_summary <- suspension_df %>% summarize(mean=mean(PSI), median=median(PSI), variance=var(PSI), Std=sd(PSI), .groups="keep")
+head(total_summary)
+```
+```{r}
+lot_summary <- suspension_df %>% group_by(Manufacturing_Lot) %>% summarize(mean=mean(PSI), median=median(PSI), variance=var(PSI), Std=sd(PSI), .groups="keep")
+head(lot_summary)
+```
+```{r}
+ttest_results <-  t.test(suspension_df$PSI,y=NULL, c("two.sided"), 1500, FALSE, TRUE, 0.95)
+ttest_results
+```
+```{r}
+ttest_by_lot_1 <- t.test(subset(suspension_df, Manufacturing_Lot == "Lot1")$PSI,y=NULL, c("two.sided"), 1500, FALSE, TRUE, 0.95)
+ttest_by_lot_1
+```
+```{r}
+ttest_by_lot_2 <- t.test(subset(suspension_df, Manufacturing_Lot == "Lot2")$PSI,y=NULL, c("two.sided"), 1500, FALSE, TRUE, 0.95)
+ttest_by_lot_2
+```
+```{r}
+ttest_by_lot_3 <- t.test(subset(suspension_df, Manufacturing_Lot == "Lot3")$PSI,y=NULL, c("two.sided"), 1500, FALSE, TRUE, 0.95)
+ttest_by_lot_3
+```
+
